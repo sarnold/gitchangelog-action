@@ -1,0 +1,51 @@
+name: "gitchangelog-action"
+author: sarnold
+description: "Generate pretty changelogs, eg, for the github release page"
+
+inputs:
+  github_token:
+    description: "GITHUB_TOKEN secret < automatically provided by Github , you don't need to set up >"
+    required: true
+
+  output_file:
+    description: "Filename for changelog (default is CHANGES.md)"
+    default: "CHANGES.md"
+    required: false
+
+  commit_changelog:
+    description: "Whether to commit the changelog file"
+    default: ""
+    required: false
+
+  extra_sort:
+    description: "Whether to sort the list of found tags (fix ordering issues)"
+    default: ""
+    required: false
+
+  target_branch:
+    description: "Branch that the action will target. Defaults to the current branch."
+    default: ""
+    required: false
+
+  pull_request_branch:
+    description: "Branch that the action will target on pull_request. Defaults to GITHUB_BASE_REF."
+    default: ""
+    required: false
+
+  target_repository:
+    description: "Repository that the report will be pushed to. Defaults to the current repository."
+    default: ""
+    required: false
+
+  pull_request_repository:
+    description: "Repository that the action will target on pull_request. Defaults to TARGET_REPOSITORY"
+    default: ""
+    required: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+
+branding:
+  icon: "file-text"
+  color: "green"

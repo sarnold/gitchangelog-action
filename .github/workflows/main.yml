@@ -1,0 +1,25 @@
+name: repo-tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ master ]
+
+
+jobs:
+  gitchangelog_test:
+    runs-on: ubuntu-latest
+    name: Test changelog
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: gitchangelog action step (debug)
+        uses: ./ # Uses an action in the root directory
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN}}

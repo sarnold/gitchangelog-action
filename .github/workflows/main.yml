@@ -26,3 +26,9 @@ jobs:
 
       - name: Display changes file
         run: cat CHANGES.md
+
+      - name: Checkout test repo
+        uses: actions/checkout@v2
+        with:
+          repository: sarnold/gitchangelog
+          path: gcl-test

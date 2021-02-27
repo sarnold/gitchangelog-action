@@ -17,7 +17,7 @@ RUN apk --no-cache add \
 
 RUN pip3 install https://github.com/sarnold/gitchangelog/archive/3.0.5.tar.gz
 
-ADD ./.gitchangelog-release.rc /.gitchangelog-release.rc
+ADD ./gitchangelog-release.rc /gitchangelog-release.rc
 
 ADD ./genchangelog.sh /genchangelog.sh
 

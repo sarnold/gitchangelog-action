@@ -6,7 +6,7 @@ echo "Found: ${GIT_VERSION}"
 NUM_TAGS=$(git tag -l | wc -l)
 echo "Number of tags found: ${NUM_TAGS}"
 
-CONFIG_FILE="gitchangelog-release.rc"
+CONFIG_FILE="/gitchangelog-release.rc"
 if [[ -n "$INPUT_CONFIG_FILE" ]]; then
     GITCHANGELOG_CONFIG_FILENAME="${INPUT_CONFIG_FILE}"
 else

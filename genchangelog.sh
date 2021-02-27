@@ -15,7 +15,7 @@ PREVIOUS_SORTED=$(git tag --sort=taggerdate | tail -n2 | head -n1)
 
 NUM_TAGS=$(git tag -l | wc -l)
 echo "Number of tags found: ${NUM_TAGS}"
-if [[ "${NUM_TAGS}" = "0" ]]
+if [[ "${NUM_TAGS}" = "0" ]]; then
     echo "Zero tags found, nothing to do ..."
 elif [[ "${NUM_TAGS}" = "1" ]]; then
     echo "No previous tag found, generating full changelog ..."

@@ -29,6 +29,9 @@ By default this action will ues the ``gitchangelog.rc.github.release``
 config file installed by the gitchangelog package.
 
 
+.. _reStructuredText: https://docutils.sourceforge.io/rst.html
+.. _MarkDown: https://www.markdownguide.org/
+
 
 Usage
 =====
@@ -58,29 +61,51 @@ Default configuration
               github_token: ${{ secrets.GITHUB_TOKEN}}
 
 
-Advanced configuration
-----------------------
+Full configuration
+------------------
 
 ::
 
     name: gitchangelog
-    on: [push]
+    on:
+      push:
+        # trigger a release on any tag push
+        tags:
+          - '*'
 
     jobs:
+      build:
+        # build stuff here to create release artifacts if needed
+
       release:
-        name: gitchangelog-action
+        name: gitchangelog with gh-release action
         runs-on: ubuntu-latest
         steps:
+          - name: Get version
+            id: get_version
+            run: |
+              echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+              echo ${{ VERSION }}
+
           - uses: actions/checkout@v2
             with:
               fetch-depth: 0
 
-          - name: gitchangelog action step
+          - name: Generate changes file
             uses: sarnold/gitchangelog-action@master
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
-              output_file: CHANGELOG.rst
-              config_file: .gitchangelog-custom.rc
+
+          - name: Create release
+            uses: softprops/action-gh-release@v1
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+              tag_name: ${{ env.VERSION }}
+              name: Release ${{ env.VERSION }}
+              body_path: CHANGES.md
+              draft: true
+              prerelease: false
 
 
 Input Options

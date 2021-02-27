@@ -33,4 +33,5 @@ fi
 
 echo "Using command: ${CMD}"
 
+gitchangelog --debug
 gitchangelog --debug HEAD^^..HEAD

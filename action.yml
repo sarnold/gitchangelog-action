@@ -7,18 +7,28 @@ inputs:
     description: "GITHUB_TOKEN secret < automatically provided by Github , you don't need to set up >"
     required: true
 
+  config_file:
+    description: "Path to gitchangelog.rc (default uses Markdown release cfg)"
+    default: ""
+    required: false
+
   output_file:
     description: "Filename for changelog (default is CHANGES.md)"
     default: "CHANGES.md"
     required: false
 
-  commit_changelog:
-    description: "Whether to commit the changelog file"
+  extra_sort:
+    description: "Whether to sort the list of tags (fix ordering issues)"
     default: ""
     required: false
 
-  extra_sort:
-    description: "Whether to sort the list of found tags (fix ordering issues)"
+  no_args:
+    description: "Pass no ref args to gitchangelog (always generate full changelog)"
+    default: ""
+    required: false
+
+  commit_changelog:
+    description: "Whether to commit the changelog file"
     default: ""
     required: false
 

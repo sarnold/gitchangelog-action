@@ -18,9 +18,15 @@ A Github Action for gitchangelog
 
 
 What is gitchangelog?
-=============
-
-gitchangelog_ 
+=====================
+ 
+gitchangelog_ creates a changelog from git log history using multiple
+template engines and a config file. Output can be either `reStructuredText`_
+or `MarkDown`_, with the latter format as default for this action (mainly
+for generating GitHub release pages).
+ 
+By default this action will ues the ``gitchangelog.rc.github.release``
+config file installed by the gitchangelog package.
 
 
 
@@ -43,17 +49,13 @@ Default configuration
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
+            with:
+              fetch-depth: 0
 
           - name: gitchangelog action step
             uses: sarnold/gitchangelog-action@master
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
-
-          - name: upload metrics report
-            uses: actions/upload-artifact@v2
-            with:
-              name: metrics
-              path: ./metrics
 
 
 Advanced configuration
@@ -65,7 +67,7 @@ Advanced configuration
     on: [push]
 
     jobs:
-      check:
+      release:
         name: gitchangelog-action
         runs-on: ubuntu-latest
         steps:
@@ -78,7 +80,7 @@ Advanced configuration
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
               output_file: CHANGELOG.rst
-              extra_sort: True
+              config_file: .gitchangelog-custom.rc
 
 
 Input Options
@@ -89,12 +91,13 @@ Input Options
           you can see what it *would* do before you actually enable it.
 
 
-:github_token: GITHUB_TOKEN secret (automatically provided by Github,
-  you don't need to set this up)
-:commit_changelog: Whether to commit the report files (default: false)
-:output_file: Filename for changelog (default is CHANGES.md)
-:extra_sort: Additionally sort the list of found tags (default is False)
-:target_branch: Branch that the action will target (default is current branch)
+:github_token: GITHUB_TOKEN secret (automatically provided by Github)
+:config_file: Path to gitchangelog.rc (default: Markdown release cfg)
+:output_file: Filename for changelog (default: CHANGES.md)
+:extra_sort: Additionally sort the list of found tags (default: False)
+:no_args: Pass no ref args to gitchangelog (always generate full changelog)
+:commit_changelog: Whether to commit the changelog file (default: false)
+:target_branch: Branch that the action will target (default: current branch)
 
 
 Input Constraints
@@ -114,15 +117,15 @@ Operating System Support
 ------------------------
 
 This action runs in a Docker container and requires the Ubuntu_ CI runner.
-In your workflow job configuration, you'll need to set the ``runs-on``
+In your workflow job configuration, you should set the ``runs-on``
 property to ``ubuntu-latest``::
 
     jobs:
-      metrics:
+      release:
         runs-on: ubuntu-latest
 
-The ``gitchangelog`` tool itself is built and tested in github CI using Linux,
-Macos, and Windows, so you can always generate output on your local
+The ``gitchangelog`` tool itself is built and tested in github CI using
+Linux, Macos, and Windows, so you can always generate output on your local
 machine as needed.
 
 

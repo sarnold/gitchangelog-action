@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM alpine
 
 LABEL "maintainer"="Stephen Arnold <nerdboy@gentoo.org>" \
       "repository"="https://github.com/sarnold/gitchangelog-action" \
@@ -8,16 +8,16 @@ LABEL "maintainer"="Stephen Arnold <nerdboy@gentoo.org>" \
       "com.github.actions.icon"="check-circle" \
       "com.github.actions.color"="package"
 
-ENV DEBIAN_FRONTEND noninteractive
-# Set PYTHONUNBUFFERED so we don't get interleaved output
-ENV PYTHONUNBUFFERED 1
+RUN apk --no-cache add \
+    python3 \
+    python3-dev \
+    bash \
+    git \
+    py3-pip
 
-RUN apt-get update && \
-    apt-get install --no-install-suggests --no-install-recommends -y git && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /tmp/* && \
-    python3 -m pip install https://github.com/sarnold/gitchangelog/archive/3.0.5.tar.gz
+RUN pip3 install https://github.com/sarnold/gitchangelog/archive/3.0.5.tar.gz
+
+ADD ./.gitchangelog-release.rc /.gitchangelog-release.rc
 
 ADD ./genchangelog.sh /genchangelog.sh
 

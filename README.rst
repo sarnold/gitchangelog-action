@@ -18,9 +18,15 @@ A Github Action for gitchangelog
 
 
 What is gitchangelog?
-=============
-
-gitchangelog_ 
+=====================
+ 
+gitchangelog_ creates a changelog from git log history using multiple
+template engines and a config file. Output can be either `reStructuredText`_
+or `MarkDown`_, with the latter format as default for this action (mainly
+for generating GitHub release pages).
+ 
+By default this action will ues the ``gitchangelog.rc.github.release``
+config file installed by the gitchangelog package.
 
 
 
@@ -48,12 +54,6 @@ Default configuration
             uses: sarnold/gitchangelog-action@master
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
-
-          - name: upload metrics report
-            uses: actions/upload-artifact@v2
-            with:
-              name: metrics
-              path: ./metrics
 
 
 Advanced configuration

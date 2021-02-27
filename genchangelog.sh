@@ -1,38 +1,40 @@
 #! /usr/bin/env bash
 
-echo "Current github ref: ${GITHUB_REF}"
-echo "Current tag: ${GITHUB_REF/refs\/tags\//}"
-if ! [[ -n "${GITHUB_REF/refs\/tags\//}" ]]; then
-    echo "No current tag found!"
-else
-    CURRENT_TAG="${GITHUB_REF/refs\/tags\//}"
-    echo "Using tag: ${CURRENT_TAG}"
-fi
-
-REV_LIST=$(git rev-list --tags --skip=1 --max-count=1)
-PREVIOUS_TAG=$(git describe --abbrev=0 --tags "${REV_LIST}")
-PREVIOUS_SORTED=$(git tag --sort=taggerdate | tail -n2 | head -n1)
+GIT_VERSION=$(git --version)
+echo "Found: ${GIT_VERSION}"
 
 NUM_TAGS=$(git tag -l | wc -l)
 echo "Number of tags found: ${NUM_TAGS}"
-if [[ "${NUM_TAGS}" = "0" ]]; then
-    echo "Zero tags found, nothing to do ..."
-elif [[ "${NUM_TAGS}" = "1" ]]; then
-    echo "No previous tag found, generating full changelog ..."
-    BASE_TAG=0
-    CMD="gitchangelog"
+
+if [[ -n "$GITCHANGELOG_CONFIG_FILENAME" ]]; then
+    RC_FILE="${GITCHANGELOG_CONFIG_FILENAME}"
+    echo "Using env config: ${RC_FILE}"
 else
+    echo "No rc-file specified, using defaults"
+fi
+
+if [[ "${NUM_TAGS}" = "0" || "${NUM_TAGS}" = "1" ]]; then
+    echo "No previous tag found, generating full changelog ..."
+    CMD="gitchangelog --debug"
+else
+    VERSION=${GITHUB_REF/refs\/tags\//}
+    echo "Current version ref: ${VERSION}"
+    CURRENT_TAG="${VERSION}"
+    echo "If this is a tag, we use it: ${CURRENT_TAG}"
+
+    REV_LIST=$(git rev-list --tags --skip=1 --max-count=1)
+    PREVIOUS_TAG=$(git describe --abbrev=0 --tags "${REV_LIST}")
+    PREVIOUS_SORTED=$(git tag --sort=taggerdate | tail -n2 | head -n1)
+
     if [[ -n $USE_SORT ]]; then
         LAST_TAG="${PREVIOUS_SORTED}"
     else
         LAST_TAG="${PREVIOUS_TAG}"
     fi
     echo "Using previous tag: ${LAST_TAG}"
-    CMD="gitchangelog ${LAST_TAG}..${CURRENT_TAG}"
+    CMD="gitchangelog --debug ${LAST_TAG}..${CURRENT_TAG}"
 fi
 
 echo "Using command: ${CMD}"
 
-git --version
-gitchangelog --debug
-
+$CMD

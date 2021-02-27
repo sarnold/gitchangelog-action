@@ -89,12 +89,12 @@ Input Options
           you can see what it *would* do before you actually enable it.
 
 
-:github_token: GITHUB_TOKEN secret (automatically provided by Github,
-  you don't need to set this up)
+:github_token: GITHUB_TOKEN secret (automatically provided by Github)
+:config_file: Path to gitchangelog.rc (default: Markdown release cfg)
+:output_file: Filename for changelog (default: CHANGES.md)
 :commit_changelog: Whether to commit the report files (default: false)
-:output_file: Filename for changelog (default is CHANGES.md)
-:extra_sort: Additionally sort the list of found tags (default is False)
-:target_branch: Branch that the action will target (default is current branch)
+:extra_sort: Additionally sort the list of found tags (default: False)
+:target_branch: Branch that the action will target (default: current branch)
 
 
 Input Constraints

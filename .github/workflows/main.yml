@@ -23,3 +23,6 @@ jobs:
         uses: ./ # Uses an action in the root directory
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Display changes file
+        run: cat CHANGES.md

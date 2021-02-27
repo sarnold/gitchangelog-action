@@ -6,12 +6,19 @@ echo "Found: ${GIT_VERSION}"
 NUM_TAGS=$(git tag -l | wc -l)
 echo "Number of tags found: ${NUM_TAGS}"
 
-if [[ -n "$GITCHANGELOG_CONFIG_FILENAME" ]]; then
-    RC_FILE="${GITCHANGELOG_CONFIG_FILENAME}"
-    echo "Using env config: ${RC_FILE}"
+if [[ -n "$INPUT_CONFIG_FILE" ]]; then
+    GITCHANGELOG_CONFIG_FILENAME="${INPUT_CONFIG_FILE}"
 else
-    echo "No rc-file specified, using defaults"
+    GITCHANGELOG_CONFIG_FILENAME="./.gitchangelog-release.rc"
 fi
+echo "Config file: ${GITCHANGELOG_CONFIG_FILENAME}"
+
+if [[ -n "$INPUT_OUTPUT_FILE" ]]; then
+    OUT_FILE="${INPUT_OUTPUT_FILE}"
+else
+    OUT_FILE="CHANGES.md"
+fi
+echo "Output file: ${OUT_FILE}"
 
 if [[ "${NUM_TAGS}" = "0" || "${NUM_TAGS}" = "1" ]]; then
     echo "No previous tag found, generating full changelog ..."
@@ -26,15 +33,15 @@ else
     PREVIOUS_TAG=$(git describe --abbrev=0 --tags "${REV_LIST}")
     PREVIOUS_SORTED=$(git tag --sort=taggerdate | tail -n2 | head -n1)
 
-    if [[ -n $USE_SORT ]]; then
+    if [[ -n $INPUT_EXTRA_SORT ]]; then
         LAST_TAG="${PREVIOUS_SORTED}"
     else
         LAST_TAG="${PREVIOUS_TAG}"
     fi
-    echo "Using previous tag: ${LAST_TAG}"
+    echo "Previous tag: ${LAST_TAG}"
     CMD="gitchangelog --debug ${LAST_TAG}..${CURRENT_TAG}"
 fi
 
 echo "Using command: ${CMD}"
 
-$CMD
+$CMD > $OUT_FILE

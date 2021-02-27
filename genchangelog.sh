@@ -39,7 +39,11 @@ else
         LAST_TAG="${PREVIOUS_TAG}"
     fi
     echo "Previous tag: ${LAST_TAG}"
-    CMD="gitchangelog --debug ${LAST_TAG}..${CURRENT_TAG}"
+    if [[ -n $INPUT_NO_ARGS ]]; then
+        CMD="gitchangelog"
+    else
+        CMD="gitchangelog ${LAST_TAG}..${CURRENT_TAG}"
+    fi
 fi
 
 echo "Using command: ${CMD}"

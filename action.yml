@@ -22,6 +22,11 @@ inputs:
     default: ""
     required: false
 
+  no_args:
+    description: "Pass no ref args to gitchangelog (always generate full changelog)"
+    default: ""
+    required: false
+
   commit_changelog:
     description: "Whether to commit the changelog file"
     default: ""

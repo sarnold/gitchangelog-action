@@ -49,6 +49,8 @@ Default configuration
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
+            with:
+              fetch-depth: 0
 
           - name: gitchangelog action step
             uses: sarnold/gitchangelog-action@master
@@ -65,7 +67,7 @@ Advanced configuration
     on: [push]
 
     jobs:
-      check:
+      release:
         name: gitchangelog-action
         runs-on: ubuntu-latest
         steps:
@@ -78,7 +80,7 @@ Advanced configuration
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
               output_file: CHANGELOG.rst
-              extra_sort: True
+              config_file: .gitchangelog-custom.rc
 
 
 Input Options
@@ -92,8 +94,9 @@ Input Options
 :github_token: GITHUB_TOKEN secret (automatically provided by Github)
 :config_file: Path to gitchangelog.rc (default: Markdown release cfg)
 :output_file: Filename for changelog (default: CHANGES.md)
-:commit_changelog: Whether to commit the report files (default: false)
 :extra_sort: Additionally sort the list of found tags (default: False)
+:no_args: Pass no ref args to gitchangelog (always generate full changelog)
+:commit_changelog: Whether to commit the changelog file (default: false)
 :target_branch: Branch that the action will target (default: current branch)
 
 
@@ -114,15 +117,15 @@ Operating System Support
 ------------------------
 
 This action runs in a Docker container and requires the Ubuntu_ CI runner.
-In your workflow job configuration, you'll need to set the ``runs-on``
+In your workflow job configuration, you should set the ``runs-on``
 property to ``ubuntu-latest``::
 
     jobs:
-      metrics:
+      release:
         runs-on: ubuntu-latest
 
-The ``gitchangelog`` tool itself is built and tested in github CI using Linux,
-Macos, and Windows, so you can always generate output on your local
+The ``gitchangelog`` tool itself is built and tested in github CI using
+Linux, Macos, and Windows, so you can always generate output on your local
 machine as needed.
 
 

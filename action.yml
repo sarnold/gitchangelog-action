@@ -1,6 +1,6 @@
 name: "gitchangelog-action"
 author: sarnold
-description: "Generate pretty changelogs, eg, for the github release page"
+description: "Generate nice changelogs, eg, for the github release page"
 
 inputs:
   github_token:

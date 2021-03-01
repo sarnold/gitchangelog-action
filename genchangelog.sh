@@ -26,10 +26,16 @@ if [[ "${NUM_TAGS}" = "0" || "${NUM_TAGS}" = "1" ]]; then
     echo "No previous tag found, generating full changelog ..."
     CMD="gitchangelog --debug"
 else
-    [[ -n $VERSION ]] || VERSION=${GITHUB_REF/refs\/tags\//}
-    echo "Current version ref: ${VERSION}"
+    if ! [[ -n $VERSION ]]; then
+        VERSION=${GITHUB_REF/refs\/tags\//}
+        echo "Current version ref: ${VERSION}"
+        echo "If this is a tag, we use it: ${VERSION}"
+        if [[ $VERSION == refs/* ]]; then
+            VERSION=""
+            echo "Current ref is not a tag!"
+        fi
+    fi
     CURRENT_TAG="${VERSION}"
-    echo "If this is a tag, we use it: ${CURRENT_TAG}"
 
     REV_LIST=$(git rev-list --tags --skip=1 --max-count=1)
     PREVIOUS_TAG=$(git describe --abbrev=0 --tags "${REV_LIST}")

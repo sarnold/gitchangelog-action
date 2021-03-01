@@ -1,0 +1,19 @@
+scanner:
+    linter: flake8
+    diff_only: False
+
+no_blank_comment: False  # If True, no comment is made on PR without any errors.
+descending_issues_order: True  # If True, PEP 8 issues in message will be displayed in descending order of line numbers in the file
+
+flake8:
+    max-line-length: 85
+    ignore:
+      - E265
+      - E266
+      - F821
+      - W504
+    exclude:
+      - .git
+      - .github
+    filename:
+      - gitchangelog-release.rc

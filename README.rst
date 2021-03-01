@@ -157,6 +157,7 @@ Please refer to the gitchangelog_ readme document for further details.
 
 .. _actions/upload-artifact: https://github.com/actions/upload-artifact
 .. _gitchangelog: https://github.com/sarnold/gitchangelog
+.. _gitchangelog-release.rc: https://raw.githubusercontent.com/sarnold/gitchangelog-action/0.1.1/gitchangelog-release.rc
 
 
 Operating System Support

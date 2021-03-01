@@ -24,13 +24,23 @@ gitchangelog_ creates a changelog from git log history using multiple
 template engines and a config file. Output can be either `reStructuredText`_
 or `MarkDown`_, with the latter format as default for this action (mainly
 for generating GitHub release pages).
- 
-By default this action will ues the ``gitchangelog.rc.github.release``
-config file installed by the gitchangelog package.
+
+What you can do with gitchangelog-action:
+
+* generate a nicely-formatted/configurable github release document to
+  use with something like `softprops/action-gh-release`_
+* generate a full changelog during any workflow (capture as a workflow
+  or release artifact)
+* use a custom ``gitchangelog.rc`` file from your source repo
+
+By default this action will use the same ``gitchangelog.rc.github.release``
+config file installed by the gitchangelog package.  The full option list
+is shown below.
 
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _MarkDown: https://www.markdownguide.org/
+.. _softprops/action-gh-release: https://github.com/softprops/action-gh-release
 
 
 Usage
@@ -121,20 +131,31 @@ Input Options
 :output_file: Filename for changelog (default: CHANGES.md)
 :extra_sort: Additionally sort the list of found tags (default: False)
 :no_args: Pass no ref args to gitchangelog (always generate full changelog)
+
+The following options are not yet implemented:
+
 :commit_changelog: Whether to commit the changelog file (default: false)
 :target_branch: Branch that the action will target (default: current branch)
 
 
-Input Constraints
------------------
+Output Constraints
+------------------
 
-* **target_branch** will not create a new branch (you must create and
-  push the branch *before* enabling this option)
-
-
-Please refer to the gitchangelog_ readme doument for further details.
+* If you need to generate changelogs outside the github release context,
+  the workaround for now is using `actions/upload-artifact`_.
 
 
+Please refer to the gitchangelog_ readme document for further details.
+
+.. note:: gitchangelog works best if you use the "tags" it knows about
+          in your commit messages.  If you already use your own commit
+          tags/markers, you can edit (or provide) your own config file.
+          See the comments in `gitchangelog-release.rc`_ for a brief
+          description of how the tags work, and the above readme for an
+          example.
+
+
+.. _actions/upload-artifact: https://github.com/actions/upload-artifact
 .. _gitchangelog: https://github.com/sarnold/gitchangelog
 
 

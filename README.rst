@@ -1,7 +1,6 @@
-A Github Action for gitchangelog
-================================
+.. use the image below instead of a title
 
-.. image:: https://socialify.git.ci/sarnold/gitchangelog-action/image?description=1&font=Raleway&issues=1&language=1&owner=1&pulls=1&stargazers=1&theme=Light
+.. image:: https://socialify.git.ci/sarnold/gitchangelog-action/image?description=1&forks=1&language=1&owner=1&pattern=Plus&stargazers=1&theme=Light
    :alt: gitchangelog-action
 
 .. image:: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml/badge.svg

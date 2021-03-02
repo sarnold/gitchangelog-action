@@ -41,11 +41,23 @@ is shown below.
 .. _MarkDown: https://www.markdownguide.org/
 .. _softprops/action-gh-release: https://github.com/softprops/action-gh-release
 
+Examples
+========
+
+The canonical dogfood_ example is the `release.yml`_ and corresponding
+`github release page`_ in the gitchangelog repo (for a non-platform wheel).
+
+
+.. _dogfood: http://catb.org/jargon/html/D/dogfood.html
+.. _release.yml: https://github.com/sarnold/gitchangelog/blob/master/.github/workflows/release.yml#L58
+.. _github release page: https://github.com/sarnold/gitchangelog/releases/tag/3.0.7
+
 
 Usage
 =====
 
-Create a .yml file under .github/workflows with the following contents.
+To enable the default release page changes file, create a .yml file under
+.github/workflows with the following contents.
 
 Default configuration
 ---------------------
@@ -69,6 +81,12 @@ Default configuration
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
 
+
+The above is enough to generate the default release output, but should
+be paired with a release action to populate the github release page (as
+shown below).  The action will try its best to figure out the current
+and previous tags, however, if you set the VERSION variable it will be
+used for the current tag in the change diff.
 
 Full configuration
 ------------------

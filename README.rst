@@ -1,7 +1,7 @@
 .. use the image below instead of a title
 
-.. image:: https://socialify.git.ci/sarnold/gitchangelog-action/image?description=1&forks=1&language=1&owner=1&pattern=Plus&stargazers=1&theme=Light
-   :alt: gitchangelog-action
+.. image:: https://socialify.git.ci/sarnold/gitchangelog-action/image?language=1&owner=1&theme=Light
+    :alt: gitchangelog-action
 
 .. image:: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml/badge.svg
     :target: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml
@@ -51,7 +51,6 @@ The canonical dogfood_ example is the `release.yml`_ and corresponding
 .. _dogfood: http://catb.org/jargon/html/D/dogfood.html
 .. _release.yml: https://github.com/sarnold/gitchangelog/blob/master/.github/workflows/release.yml#L58
 .. _github release page: https://github.com/sarnold/gitchangelog/releases/tag/3.0.7
-
 
 Usage
 =====
@@ -154,7 +153,6 @@ The following options are not yet implemented:
 :commit_changelog: Whether to commit the changelog file (default: false)
 :target_branch: Branch that the action will target (default: current branch)
 
-
 Output Constraints
 ------------------
 
@@ -175,7 +173,6 @@ Please refer to the gitchangelog_ readme document for further details.
 .. _actions/upload-artifact: https://github.com/actions/upload-artifact
 .. _gitchangelog: https://github.com/sarnold/gitchangelog
 .. _gitchangelog-release.rc: https://raw.githubusercontent.com/sarnold/gitchangelog-action/0.1.1/gitchangelog-release.rc
-
 
 Operating System Support
 ------------------------

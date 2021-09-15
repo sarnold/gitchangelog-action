@@ -36,6 +36,13 @@ jobs:
           echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
           echo ${{ env.VERSION }}
 
+      - name: Unset version
+        if: matrix.os == 'ubuntu-18.04'
+        id: rm_version
+        run: |
+          echo "GIT_TAG=$(git describe --abbrev=0 --tags)"
+          [[ -z $TAG ]] || git tag --delete $TAG
+
       - name: gitchangelog action step (debug)
         uses: ./ # Uses an action in the root directory
         with:
@@ -48,10 +55,10 @@ jobs:
         run: |
           export VERSION=${{ env.VERSION }}
           export TITLE_VERSION=$(cat CHANGES.md | head -n1 | cut -f2 -d" ")
-          if [[ -n $VERSION ]]; then
-            [[ "${TITLE_VERSION}" == "${VERSION}" ]] || exit 1
-          else
+          if [[ -z $VERSION ]]; then
             [[ "${TITLE_VERSION}" == "(unreleased)" ]] || exit 1
+          else
+            [[ "${TITLE_VERSION}" == "${VERSION}" ]] || exit 1
           fi
 
       - name: Checkout test repo

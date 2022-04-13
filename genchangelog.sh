@@ -59,4 +59,4 @@ fi
 
 echo "Using command: ${CMD}"
 
-$CMD > $OUT_FILE
+GITHUB_TOKEN=$INPUT_REPO_TOKEN $CMD > $GITHUB_WORKSPACE/$OUT_FILE

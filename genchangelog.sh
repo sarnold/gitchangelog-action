@@ -3,6 +3,9 @@
 GIT_VERSION=$(git --version)
 echo "Found: ${GIT_VERSION}"
 
+echo "Declare local repo checkout 'safe' for consumption..."
+git config --global --add safe.directory /github/workspace
+
 NUM_TAGS=$(git tag -l | wc -l)
 echo "Number of tags found: ${NUM_TAGS}"
 

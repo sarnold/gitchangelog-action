@@ -50,13 +50,16 @@ The canonical dogfood_ example is the `release.yml`_ and corresponding
 
 .. _dogfood: http://catb.org/jargon/html/D/dogfood.html
 .. _release.yml: https://github.com/sarnold/gitchangelog/blob/master/.github/workflows/release.yml#L58
-.. _github release page: https://github.com/sarnold/gitchangelog/releases/tag/3.0.7
+.. _github release page: https://github.com/sarnold/gitchangelog/releases/tag/3.0.9
 
 Usage
 =====
 
 To enable the default release page changes file, create a .yml file under
 .github/workflows with the following contents.
+
+.. note:: Be sure to use the latest tag for this action if you're not
+          tracking the ``master`` branch.
 
 Default configuration
 ---------------------

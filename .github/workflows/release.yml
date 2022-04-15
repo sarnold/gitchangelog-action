@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    # release on tag push
+    tags:
+      - '*'
+
+jobs:
+  gitchangelog_test:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04]
+
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+
+    name: Test changelog
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get version
+        id: get_version
+        run: |
+          echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+          echo ${{ env.VERSION }}
+
+      - name: gitchangelog action step (debug)
+        uses: ./ # Uses an action in the root directory
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Display changes file
+        run: cat CHANGES.md
+
+      - name: Test changes file
+        run: |
+          export VERSION=${{ env.VERSION }}
+          export TITLE_VERSION=$(cat CHANGES.md | head -n1 | cut -f2 -d" ")
+          if [[ -z $VERSION ]]; then
+            [[ "${TITLE_VERSION}" == "(unreleased)" ]] || exit 1
+          else
+            [[ "${TITLE_VERSION}" == "${VERSION}" ]] || exit 1
+          fi
+
+      - name: Create release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Release v${{ env.VERSION }}
+          body_path: CHANGES.md
+          draft: false
+          prerelease: false

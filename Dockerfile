@@ -15,11 +15,7 @@ RUN apk --no-cache add \
     git \
     py3-pip
 
-RUN pip install pystache>=0.6.0 --prefer-binary \
-    -f https://github.com/sarnold/pystache/releases/
-
-RUN pip install gitchangelog>=3.0.9 --prefer-binary \
-    -f https://github.com/sarnold/gitchangelog/releases/
+RUN pip install https://github.com/sarnold/gitchangelog/archive/refs/tags/3.0.9.tar.gz
 
 ADD ./gitchangelog-release.rc /gitchangelog-release.rc
 

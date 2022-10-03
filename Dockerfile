@@ -1,4 +1,4 @@
-FROM alpine
+FROM python:3.9-alpine3.16
 
 LABEL "maintainer"="Stephen Arnold <nerdboy@gentoo.org>" \
       "repository"="https://github.com/sarnold/gitchangelog-action" \
@@ -8,17 +8,14 @@ LABEL "maintainer"="Stephen Arnold <nerdboy@gentoo.org>" \
       "com.github.actions.icon"="check-circle" \
       "com.github.actions.color"="package"
 
-RUN apk --no-cache add \
-    python3 \
-    python3-dev \
-    bash \
-    git \
-    py3-pip
+RUN apk --no-cache add git bash
 
-RUN pip install https://github.com/sarnold/gitchangelog/releases/download/3.1.0/gitchangelog-3.1.0-py3-none-any.whl
+ADD genchangelog.sh /
+ADD requirements.txt /
+ADD gitchangelog-release.rc /
 
-ADD ./gitchangelog-release.rc /gitchangelog-release.rc
-
-ADD ./genchangelog.sh /genchangelog.sh
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r /requirements.txt
+RUN chmod +x /genchangelog.sh
 
 ENTRYPOINT ["/genchangelog.sh"]

@@ -25,7 +25,7 @@ jobs:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -44,7 +44,7 @@ jobs:
           [[ -z $TAG ]] || git tag --delete $TAG
 
       - name: gitchangelog action step (debug)
-        uses: ./ # Uses an action in the root directory
+        uses: ./  # Uses an action in the root directory
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
 
@@ -62,7 +62,7 @@ jobs:
           fi
 
       - name: Checkout test repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: sarnold/gitchangelog
           path: vendor/gcl-test

@@ -1,24 +1,14 @@
 .. use the image below instead of a title
 
-.. image:: https://socialify.git.ci/sarnold/gitchangelog-action/image?language=1&owner=1&theme=Light
-    :alt: gitchangelog-action
+|splash|
 
-.. image:: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml/badge.svg
-    :target: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml
-    :alt: CI test status
+|CI| |pre|
 
-.. image:: https://img.shields.io/github/v/tag/sarnold/gitchangelog-action?color=green&include_prereleases&label=latest%20release
-    :target: https://github.com/sarnold/gitchangelog-action/releases
-    :alt: GitHub tag
-
-.. image:: https://img.shields.io/github/license/sarnold/gitchangelog-action
-    :target: https://github.com/sarnold/gitchangelog-action/blob/master/LICENSE
-    :alt: License
-
+|tag| |license|
 
 What is gitchangelog?
 =====================
- 
+
 gitchangelog_ creates a changelog from git log history using multiple
 template engines and a config file. Output can be either `reStructuredText`_
 or `MarkDown`_, with the latter format as default for this action (mainly
@@ -45,12 +35,12 @@ Examples
 ========
 
 The canonical dogfood_ example is the `release.yml`_ and corresponding
-`github release page`_ in the gitchangelog repo (for a non-platform wheel).
+`github release page`_ in the gitchangelog repo.
 
 
 .. _dogfood: http://catb.org/jargon/html/D/dogfood.html
 .. _release.yml: https://github.com/sarnold/gitchangelog/blob/master/.github/workflows/release.yml#L58
-.. _github release page: https://github.com/sarnold/gitchangelog/releases/tag/3.0.9
+.. _github release page: https://github.com/sarnold/gitchangelog/releases
 
 Usage
 =====
@@ -59,7 +49,7 @@ To enable the default release page changes file, create a .yml file under
 .github/workflows with the following contents.
 
 .. note:: Be sure to use the latest tag for this action if you're not
-          tracking the ``master`` branch.
+          tracking 'v1' or the ``master`` branch.
 
 Default configuration
 ---------------------
@@ -74,12 +64,12 @@ Default configuration
         name: gitchangelog-action
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
             with:
               fetch-depth: 0
 
           - name: gitchangelog action step
-            uses: sarnold/gitchangelog-action@master
+            uses: sarnold/gitchangelog-action@v1
             with:
               github_token: ${{ secrets.GITHUB_TOKEN}}
 
@@ -116,7 +106,7 @@ Full configuration
               echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
               echo ${{ VERSION }}
 
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
             with:
               fetch-depth: 0
 
@@ -195,3 +185,22 @@ machine as needed.
 
 .. _Ubuntu: https://ubuntu.com/
 
+
+.. |splash| image:: https://socialify.git.ci/sarnold/gitchangelog-action/image?language=1&owner=1&theme=Light
+    :alt: gitchangelog-action
+
+.. |CI| image:: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/sarnold/gitchangelog-action/actions/workflows/main.yml
+    :alt: CI test status
+
+.. |pre| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&amp;logoColor=white
+   :target: https://github.com/pre-commit/pre-commit
+   :alt: pre-commit
+
+.. |tag| image:: https://img.shields.io/github/v/tag/sarnold/gitchangelog-action?color=green&include_prereleases&label=latest%20release
+    :target: https://github.com/sarnold/gitchangelog-action/releases
+    :alt: GitHub tag
+
+.. |license| image:: https://img.shields.io/github/license/sarnold/gitchangelog-action
+    :target: https://github.com/sarnold/gitchangelog-action/blob/master/LICENSE
+    :alt: License

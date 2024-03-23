@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-20.04, ubuntu-22.04]
 
     runs-on: ${{ matrix.os }}
     defaults:
@@ -25,19 +25,19 @@ jobs:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Get version
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         id: get_version
         run: |
           echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
           echo ${{ env.VERSION }}
 
       - name: Unset version
-        if: matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-20.04'
         id: rm_version
         run: |
           echo "GIT_TAG=$(git describe --abbrev=0 --tags)"
@@ -62,7 +62,7 @@ jobs:
           fi
 
       - name: Checkout test repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: sarnold/gitchangelog
           path: vendor/gcl-test

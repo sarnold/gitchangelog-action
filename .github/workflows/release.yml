@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-22.04]
 
     runs-on: ${{ matrix.os }}
     defaults:
@@ -24,14 +24,14 @@ jobs:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Get version
         id: get_version
         run: |
-          echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+          echo "VERSION=$(git describe --abbrev=0 --tags --match 1*)" >> $GITHUB_ENV
           echo ${{ env.VERSION }}
 
       - name: gitchangelog action step (debug)

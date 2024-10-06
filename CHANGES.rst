@@ -2,6 +2,16 @@ Changelog
 =========
 
 
+1.1.1 (2024-10-06)
+------------------
+
+Fixes
+~~~~~
+- Update default release config to pick up new: tag. [Stephen Arnold]
+
+  * set include merges to false
+
+
 1.1.0 (2024-03-23)
 ------------------
 
@@ -134,3 +144,5 @@ Other
   * add release cfg rc file to docker, set/check env vars
   * wire up input options, show output, update readme
   * add no-args option for full changelog, update readme
+
+

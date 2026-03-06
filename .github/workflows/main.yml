@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04]
+        os: [ubuntu-24.04, ubuntu-22.04]
 
     runs-on: ${{ matrix.os }}
     defaults:
@@ -30,14 +30,14 @@ jobs:
           fetch-depth: 0
 
       - name: Get version
-        if: matrix.os == 'ubuntu-22.04'
+        if: matrix.os == 'ubuntu-24.04'
         id: get_version
         run: |
           echo "VERSION=$(git describe --abbrev=0 --tags --match 1*)" >> $GITHUB_ENV
           echo ${{ env.VERSION }}
 
       - name: Unset version
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         id: rm_version
         run: |
           echo "GIT_TAG=$(git describe --abbrev=0 --tags)"

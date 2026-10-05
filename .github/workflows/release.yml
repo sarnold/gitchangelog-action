@@ -18,6 +18,8 @@ jobs:
     defaults:
       run:
         shell: bash
+    permissions:
+      contents: write
 
     name: Test changelog
     steps:
@@ -51,6 +53,8 @@ jobs:
           else
             [[ "${TITLE_VERSION}" == "${VERSION}" ]] || exit 1
           fi
+          echo "VERSION: ${VERSION}"
+          echo "TITLE_VERSION: ${TITLE_VERSION}"
 
       - name: Create release
         if: "!startsWith(github.event.ref, 'refs/tags/v')"

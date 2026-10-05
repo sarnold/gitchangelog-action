@@ -19,6 +19,8 @@ jobs:
     defaults:
       run:
         shell: bash
+    permissions:
+      contents: read
 
     name: Test changelog
     steps:
@@ -60,6 +62,8 @@ jobs:
           else
             [[ "${TITLE_VERSION}" == "${VERSION}" ]] || exit 1
           fi
+          echo "VERSION: ${VERSION}"
+          echo "TITLE_VERSION: ${TITLE_VERSION}"
 
       - name: Checkout test repo
         uses: actions/checkout@v4
